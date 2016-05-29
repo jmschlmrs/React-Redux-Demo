@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
     devServer: { hot: true },
-    entry: "./public/scripts/app.jsx",
+    entry: "./public/scripts/index.js",
     output: {
         path: './public/scripts/',
         filename: 'bundle.js'

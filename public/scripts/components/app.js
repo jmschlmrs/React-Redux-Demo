@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-import Question from './components/question.jsx';
-import Response from './components/response.jsx';
+import Question from './question.jsx';
+import Response from './response.jsx';
 
-class App extends Component {
+export default class App extends Component {
   render() {
     const styles = {
         backgroundColor: 'purple'
@@ -17,5 +17,3 @@ class App extends Component {
     )
   }
 }
-
-ReactDOM.render(<App/>, document.getElementById('content'));
