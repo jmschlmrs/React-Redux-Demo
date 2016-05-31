@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom';
 import Question from './question.jsx';
 import Response from './response.jsx';
 
-export default class App extends Component {
+export default class App extends Component { 
   render() {
     const styles = {
-        backgroundColor: 'purple'
+        backgroundColor: 'white'
     }
     return (
         <div style={styles}>

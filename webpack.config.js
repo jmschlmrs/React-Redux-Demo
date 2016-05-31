@@ -3,12 +3,8 @@ var webpack = require('webpack');
 
 module.exports = {
     devServer: { hot: true },
+    devtool: 'source-map',
     entry: "./public/scripts/index.js",
-    output: {
-        path: './public/scripts/',
-        filename: 'bundle.js'
-    },
-    watch: true,
     module: {
         loaders: [
             {
@@ -21,4 +17,9 @@ module.exports = {
             }
         ]
     },
+    output: {
+        path: './public/scripts/',
+        filename: 'bundle.js'
+    },
+    watch: true,
 };
