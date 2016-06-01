@@ -5,21 +5,19 @@ export default class Response extends Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.state = {
-            color: '',
-            value: '',
+            value: ''
         };
     }
     handleChange(event) {
         this.setState({value: event.target.value});
-
-        if (event.target.value.toLowerCase() === 'good') {
-            this.setState({color: 'purple'});
-        }
-        console.log(this.state.value, this.state.color);
     }
     render() {
         return (
-            <input value={this.state.value} onChange={this.handleChange}/>
+            <div>
+                <input value={this.state.value} onChange={this.handleChange}/>
+                <br />
+                <div>I am {this.state.value}</div>   
+            </div>
         )
     }
 }

@@ -1,8 +1,13 @@
-const userInput = (state = {}, action) => {
+const initialState = {
+    userInput: ''
+};
+
+const userInput = (state = initialState, action) => {
     switch (action.type) {
         case 'USER_INPUT':
-            state.feeling = 'test feeling';
-            return state;
+            return Object.assign({}, state, {
+                userInput: action.text.toLowerCase()
+            });
         default:
             return state;
     }
