@@ -1,3 +1,8 @@
-export function userInput(text) {
-    return {type: 'USER_INPUT', text};
+function inputChange(text) {
+  return {
+    type: 'INPUT_CHANGE',
+    value: text
+  }
 }
+
+export default inputChange;

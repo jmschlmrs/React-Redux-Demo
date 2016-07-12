@@ -50,29 +50,49 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _redux = __webpack_require__(175);
+	
 	var _reactDom = __webpack_require__(33);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
 	var _reactRedux = __webpack_require__(168);
 	
-	var _redux = __webpack_require__(175);
+	var _reducers = __webpack_require__(194);
 	
-	var _index = __webpack_require__(194);
+	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _index2 = _interopRequireDefault(_index);
+	var _actions = __webpack_require__(196);
 	
-	var _app = __webpack_require__(195);
+	var _actions2 = _interopRequireDefault(_actions);
+	
+	var _app = __webpack_require__(197);
 	
 	var _app2 = _interopRequireDefault(_app);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var store = (0, _redux.createStore)(_index2.default);
+	var store = (0, _redux.createStore)(_reducers2.default);
+	var ConnectedApp = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_app2.default);
 	
-	(0, _reactDom.render)(_react2.default.createElement(
+	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: store },
-	    _react2.default.createElement(_app2.default, null)
+	    _react2.default.createElement(ConnectedApp, null)
 	), document.getElementById('content'));
+	
+	function mapStateToProps(state) {
+	    return {
+	        input: state.value
+	    };
+	}
+	function mapDispatchToProps(dispatch) {
+	    return {
+	        handleChange: function handleChange(text) {
+	            dispatch((0, _actions2.default)(text));
+	        }
+	    };
+	}
 
 /***/ },
 /* 1 */
@@ -183,6 +203,31 @@
 	// shim for using process in browser
 	
 	var process = module.exports = {};
+	
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+	
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+	
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -207,7 +252,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
 	    draining = true;
 	
 	    var len = queue.length;
@@ -224,7 +269,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    cachedClearTimeout(timeout);
 	}
 	
 	process.nextTick = function (fun) {
@@ -236,7 +281,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        cachedSetTimeout(drainQueue, 0);
 	    }
 	};
 	
@@ -21877,17 +21922,16 @@
 	    value: true
 	});
 	var initialState = {
-	    userInput: ''
+	    value: ''
 	};
-	
 	var userInput = function userInput() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
 	    var action = arguments[1];
 	
 	    switch (action.type) {
-	        case 'USER_INPUT':
+	        case 'INPUT_CHANGE':
 	            return Object.assign({}, state, {
-	                userInput: action.text.toLowerCase()
+	                value: action.value
 	            });
 	        default:
 	            return state;
@@ -21897,93 +21941,26 @@
 	exports.default = userInput;
 
 /***/ },
-/* 195 */
-/***/ function(module, exports, __webpack_require__) {
+/* 195 */,
+/* 196 */
+/***/ function(module, exports) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
+	function inputChange(text) {
+	  return {
+	    type: 'INPUT_CHANGE',
+	    value: text
+	  };
+	}
 	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _question = __webpack_require__(198);
-	
-	var _question2 = _interopRequireDefault(_question);
-	
-	var _response = __webpack_require__(199);
-	
-	var _response2 = _interopRequireDefault(_response);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var App = function App() {
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_question2.default, null),
-	        _react2.default.createElement(_response2.default, null)
-	    );
-	};
-	
-	exports.default = App;
+	exports.default = inputChange;
 
 /***/ },
-/* 196 */,
-/* 197 */,
-/* 198 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	        value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Question = function (_Component) {
-	        _inherits(Question, _Component);
-	
-	        function Question() {
-	                _classCallCheck(this, Question);
-	
-	                return _possibleConstructorReturn(this, Object.getPrototypeOf(Question).apply(this, arguments));
-	        }
-	
-	        _createClass(Question, [{
-	                key: 'render',
-	                value: function render() {
-	                        return _react2.default.createElement(
-	                                'h2',
-	                                null,
-	                                'How are you?'
-	                        );
-	                }
-	        }]);
-	
-	        return Question;
-	}(_react.Component);
-	
-	exports.default = Question;
-
-/***/ },
-/* 199 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22006,25 +21983,22 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Response = function (_Component) {
-	    _inherits(Response, _Component);
+	var App = function (_Component) {
+	    _inherits(App, _Component);
 	
-	    function Response(props) {
-	        _classCallCheck(this, Response);
+	    function App(props) {
+	        _classCallCheck(this, App);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Response).call(this));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
 	        _this.handleChange = _this.handleChange.bind(_this);
-	        _this.state = {
-	            value: ''
-	        };
 	        return _this;
 	    }
 	
-	    _createClass(Response, [{
+	    _createClass(App, [{
 	        key: 'handleChange',
 	        value: function handleChange(event) {
-	            this.setState({ value: event.target.value });
+	            this.props.handleChange(event.target.value);
 	        }
 	    }, {
 	        key: 'render',
@@ -22032,22 +22006,27 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('input', { value: this.state.value, onChange: this.handleChange }),
-	                _react2.default.createElement('br', null),
 	                _react2.default.createElement(
-	                    'div',
+	                    'h2',
+	                    null,
+	                    'How are you?'
+	                ),
+	                _react2.default.createElement('input', { value: this.props.input, onChange: this.handleChange }),
+	                _react2.default.createElement(
+	                    'p',
 	                    null,
 	                    'I am ',
-	                    this.state.value
+	                    this.props.input,
+	                    '.'
 	                )
 	            );
 	        }
 	    }]);
 	
-	    return Response;
+	    return App;
 	}(_react.Component);
 	
-	exports.default = Response;
+	exports.default = App;
 
 /***/ }
 /******/ ]);

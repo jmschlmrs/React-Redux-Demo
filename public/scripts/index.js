@@ -1,15 +1,31 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import userInput from './reducers/index';
+import React, {Component} from 'react';
+import {createStore, bindActionCreators} from 'redux';
+import ReactDOM from 'react-dom';
+import {connect, Provider} from 'react-redux';
+
+import userInput from './reducers';
+import inputChange from './actions';
 import App from './components/app';
 
 let store = createStore(userInput);
+let ConnectedApp = connect(mapStateToProps,mapDispatchToProps)(App);
 
-render(
+ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <ConnectedApp/>
     </Provider>,
-  document.getElementById('content')
+    document.getElementById('content')
 );
+
+function mapStateToProps(state) {
+    return {
+        input: state.value
+    }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    handleChange: (text) => {
+      dispatch(inputChange(text))
+    }
+  }
+}

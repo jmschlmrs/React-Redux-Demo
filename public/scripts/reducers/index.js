@@ -1,14 +1,13 @@
-const initialState = {
-    userInput: ''
+let initialState = {
+    value : ''
 };
-
-const userInput = (state = initialState, action) => {
+let userInput = function(state=initialState, action) {
     switch (action.type) {
-        case 'USER_INPUT':
-            return Object.assign({}, state, {
-                userInput: action.text.toLowerCase()
-            });
-        default:
+        case 'INPUT_CHANGE':
+            return Object.assign({},state, {
+                value: action.value
+            })
+        default: 
             return state;
     }
 }
