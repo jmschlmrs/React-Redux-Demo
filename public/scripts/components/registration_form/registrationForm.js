@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Slider from './slider';
+import Name from './name';
 
 class RegistrationForm extends Component {
     constructor() {
@@ -11,17 +12,40 @@ class RegistrationForm extends Component {
             discoverySource: '',
             jackedSliderValue: 3
         };
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleNameChange(event) {
+        this.setState({fullName: event.target.value});
+    }
+    handleSubmit(event) {
+        event.preventDefault();
+
+        fetch('/register', {
+            method: 'post',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(this.state)
+        }).then((response) => {
+            this.setState({
+                fullName: '',
+                email: '',
+                password: '',
+                discoverySource: '',
+                jackedSliderValue: 3
+            });
+        }).catch((error) => { 
+            alert('Error during registration.')
+        });
     }
     render() {
         return (
             <div>
                 <h1 className="registration__title">Sign up</h1>
-                <form action="/register" method="post" className="registration-form">
+                <form onSubmit={this.handleSubmit} className="registration-form">
                     <fieldset className="registration-form__input-section">
-                        <label htmlFor="registerFullName">
-                            Name <span className="registration-form__asterisk">*</span>
-                        </label>
-                        <input id="registerFullName" className="registration-form__input" type="text" placeholder="Full name" />
+                        <Name inputValue={this.state.fullName} handleChange={this.handleNameChange} />
                     </fieldset>
                     <fieldset className="registration-form__input-section">
                         <label htmlFor="registerEmail">

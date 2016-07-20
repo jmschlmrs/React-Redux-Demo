@@ -21144,6 +21144,10 @@
 	
 	var _slider2 = _interopRequireDefault(_slider);
 	
+	var _name = __webpack_require__(204);
+	
+	var _name2 = _interopRequireDefault(_name);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21167,10 +21171,42 @@
 	            discoverySource: '',
 	            jackedSliderValue: 3
 	        };
+	        _this.handleNameChange = _this.handleNameChange.bind(_this);
+	        _this.handleSubmit = _this.handleSubmit.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(RegistrationForm, [{
+	        key: 'handleNameChange',
+	        value: function handleNameChange(event) {
+	            this.setState({ fullName: event.target.value });
+	        }
+	    }, {
+	        key: 'handleSubmit',
+	        value: function handleSubmit(event) {
+	            var _this2 = this;
+	
+	            event.preventDefault();
+	
+	            fetch('/register', {
+	                method: 'post',
+	                headers: new Headers({
+	                    'Content-Type': 'application/json'
+	                }),
+	                body: JSON.stringify(this.state)
+	            }).then(function (response) {
+	                _this2.setState({
+	                    fullName: '',
+	                    email: '',
+	                    password: '',
+	                    discoverySource: '',
+	                    jackedSliderValue: 3
+	                });
+	            }).catch(function (error) {
+	                alert('Error during registration.');
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -21183,21 +21219,11 @@
 	                ),
 	                _react2.default.createElement(
 	                    'form',
-	                    { action: '/register', method: 'post', className: 'registration-form' },
+	                    { onSubmit: this.handleSubmit, className: 'registration-form' },
 	                    _react2.default.createElement(
 	                        'fieldset',
 	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'registerFullName' },
-	                            'Name ',
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'registration-form__asterisk' },
-	                                '*'
-	                            )
-	                        ),
-	                        _react2.default.createElement('input', { id: 'registerFullName', className: 'registration-form__input', type: 'text', placeholder: 'Full name' })
+	                        _react2.default.createElement(_name2.default, { inputValue: this.state.fullName, handleChange: this.handleNameChange })
 	                    ),
 	                    _react2.default.createElement(
 	                        'fieldset',
@@ -21373,6 +21399,47 @@
 	}(_react.Component);
 	
 	exports.default = Slider;
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Name = function Name(props) {
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "registerFullName" },
+	            "Name ",
+	            _react2.default.createElement(
+	                "span",
+	                { className: "registration-form__asterisk" },
+	                "*"
+	            )
+	        ),
+	        _react2.default.createElement("input", { id: "registerFullName", className: "registration-form__input", type: "text", value: props.inputValue, onChange: props.handleChange, placeholder: "Full name" })
+	    );
+	};
+	
+	Name.PropTypes = {
+	    inputValue: _react2.default.PropTypes.string,
+	    handleChange: _react2.default.PropTypes.func
+	};
+	
+	exports.default = Name;
 
 /***/ }
 /******/ ]);
