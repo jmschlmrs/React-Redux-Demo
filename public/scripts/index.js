@@ -12,7 +12,7 @@ let ConnectedApp = connect(mapStateToProps,mapDispatchToProps)(App);
 
 ReactDOM.render(
     <Provider store={store}>
-        <ConnectedApp/>
+        <ConnectedApp />
     </Provider>,
     document.getElementById('content')
 );

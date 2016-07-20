@@ -1,0 +1,14 @@
+html {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif; }
+
+body {
+  height: 100%;
+  margin: 0; }
+
+.hidden {
+  visibility: hidden; }
+body {
+  background-color: red; }
+
+/*# sourceMappingURL=bundle.style.css.map*/
