@@ -1,6 +1,9 @@
 import React,{Component} from 'react';
 import Slider from './slider';
 import Name from './name';
+import Email from './email';
+import Password from './password';
+import ConfirmPassword from './confirmPassword';
 
 class RegistrationForm extends Component {
     constructor() {
@@ -9,14 +12,27 @@ class RegistrationForm extends Component {
             fullName: '',
             email: '',
             password: '',
+            confirmPassword: '',
             discoverySource: '',
             jackedSliderValue: 3
         };
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleNameChange(event) {
         this.setState({fullName: event.target.value});
+    }
+    handleEmailChange(event) {
+        this.setState({email: event.target.value});
+    }
+    handlePasswordChange(event) {
+        this.setState({password: event.target.value});
+    }
+    handleConfirmPasswordChange(event) {
+        this.setState({confirmPassword: event.target.value});
     }
     handleSubmit(event) {
         event.preventDefault();
@@ -32,6 +48,7 @@ class RegistrationForm extends Component {
                 fullName: '',
                 email: '',
                 password: '',
+                confirmPassword: '',
                 discoverySource: '',
                 jackedSliderValue: 3
             });
@@ -48,22 +65,13 @@ class RegistrationForm extends Component {
                         <Name inputValue={this.state.fullName} handleChange={this.handleNameChange} />
                     </fieldset>
                     <fieldset className="registration-form__input-section">
-                        <label htmlFor="registerEmail">
-                            Email <span className="registration-form__asterisk">*</span>
-                        </label>        
-                        <input id="registerEmail" className="registration-form__input" type="email" placeholder="example@domain.com" />
+                        <Email inputValue={this.state.email} handleChange={this.handleEmailChange} />
                     </fieldset>
                     <fieldset className="registration-form__input-section">
-                        <label htmlFor="registerPassword">
-                            Password <span className="registration-form__asterisk">*</span>
-                        </label>       
-                        <input id="registerPassword" className="registration-form__input" type="password" />
+                        <Password inputValue={this.state.password} handleChange={this.handlePasswordChange} />
                     </fieldset>
                     <fieldset className="registration-form__input-section">
-                        <label htmlFor="registerConfirmPassword">
-                            Confirm Password <span className="registration-form__asterisk">*</span>
-                        </label>
-                        <input id="registerConfirmPassword" className="registration-form__input" type="password" />
+                        <ConfirmPassword inputValue={this.state.confirmPassword} handleChange={this.handleConfirmPasswordChange} />
                     </fieldset>
                     <fieldset className="registration-form__input-section">
                         <label htmlFor="">

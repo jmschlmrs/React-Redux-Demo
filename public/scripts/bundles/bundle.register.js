@@ -21148,6 +21148,18 @@
 	
 	var _name2 = _interopRequireDefault(_name);
 	
+	var _email = __webpack_require__(205);
+	
+	var _email2 = _interopRequireDefault(_email);
+	
+	var _password = __webpack_require__(206);
+	
+	var _password2 = _interopRequireDefault(_password);
+	
+	var _confirmPassword = __webpack_require__(207);
+	
+	var _confirmPassword2 = _interopRequireDefault(_confirmPassword);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21168,10 +21180,14 @@
 	            fullName: '',
 	            email: '',
 	            password: '',
+	            confirmPassword: '',
 	            discoverySource: '',
 	            jackedSliderValue: 3
 	        };
 	        _this.handleNameChange = _this.handleNameChange.bind(_this);
+	        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
+	        _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
+	        _this.handleConfirmPasswordChange = _this.handleConfirmPasswordChange.bind(_this);
 	        _this.handleSubmit = _this.handleSubmit.bind(_this);
 	        return _this;
 	    }
@@ -21180,6 +21196,21 @@
 	        key: 'handleNameChange',
 	        value: function handleNameChange(event) {
 	            this.setState({ fullName: event.target.value });
+	        }
+	    }, {
+	        key: 'handleEmailChange',
+	        value: function handleEmailChange(event) {
+	            this.setState({ email: event.target.value });
+	        }
+	    }, {
+	        key: 'handlePasswordChange',
+	        value: function handlePasswordChange(event) {
+	            this.setState({ password: event.target.value });
+	        }
+	    }, {
+	        key: 'handleConfirmPasswordChange',
+	        value: function handleConfirmPasswordChange(event) {
+	            this.setState({ confirmPassword: event.target.value });
 	        }
 	    }, {
 	        key: 'handleSubmit',
@@ -21199,6 +21230,7 @@
 	                    fullName: '',
 	                    email: '',
 	                    password: '',
+	                    confirmPassword: '',
 	                    discoverySource: '',
 	                    jackedSliderValue: 3
 	                });
@@ -21228,47 +21260,17 @@
 	                    _react2.default.createElement(
 	                        'fieldset',
 	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'registerEmail' },
-	                            'Email ',
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'registration-form__asterisk' },
-	                                '*'
-	                            )
-	                        ),
-	                        _react2.default.createElement('input', { id: 'registerEmail', className: 'registration-form__input', type: 'email', placeholder: 'example@domain.com' })
+	                        _react2.default.createElement(_email2.default, { inputValue: this.state.email, handleChange: this.handleEmailChange })
 	                    ),
 	                    _react2.default.createElement(
 	                        'fieldset',
 	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'registerPassword' },
-	                            'Password ',
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'registration-form__asterisk' },
-	                                '*'
-	                            )
-	                        ),
-	                        _react2.default.createElement('input', { id: 'registerPassword', className: 'registration-form__input', type: 'password' })
+	                        _react2.default.createElement(_password2.default, { inputValue: this.state.password, handleChange: this.handlePasswordChange })
 	                    ),
 	                    _react2.default.createElement(
 	                        'fieldset',
 	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'registerConfirmPassword' },
-	                            'Confirm Password ',
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'registration-form__asterisk' },
-	                                '*'
-	                            )
-	                        ),
-	                        _react2.default.createElement('input', { id: 'registerConfirmPassword', className: 'registration-form__input', type: 'password' })
+	                        _react2.default.createElement(_confirmPassword2.default, { inputValue: this.state.confirmPassword, handleChange: this.handleConfirmPasswordChange })
 	                    ),
 	                    _react2.default.createElement(
 	                        'fieldset',
@@ -21434,12 +21436,135 @@
 	    );
 	};
 	
-	Name.PropTypes = {
+	Name.propTypes = {
 	    inputValue: _react2.default.PropTypes.string,
-	    handleChange: _react2.default.PropTypes.func
+	    handleChange: _react2.default.PropTypes.func.isRequired
 	};
 	
 	exports.default = Name;
+
+/***/ },
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Email = function Email(props) {
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "registerEmail" },
+	            "Email ",
+	            _react2.default.createElement(
+	                "span",
+	                { className: "registration-form__asterisk" },
+	                "*"
+	            )
+	        ),
+	        _react2.default.createElement("input", { id: "registerEmail", className: "registration-form__input", type: "email", value: props.inputValue, onChange: props.handleChange, placeholder: "example@domain.com" })
+	    );
+	};
+	
+	Email.propTypes = {
+	    inputValue: _react2.default.PropTypes.string,
+	    handleChange: _react2.default.PropTypes.func.isRequired
+	};
+	
+	exports.default = Email;
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Password = function Password(props) {
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "registerPassword" },
+	            "Password ",
+	            _react2.default.createElement(
+	                "span",
+	                { className: "registration-form__asterisk" },
+	                "*"
+	            )
+	        ),
+	        _react2.default.createElement("input", { id: "registerPassword", className: "registration-form__input", type: "password", value: props.inputValue, onChange: props.handleChange })
+	    );
+	};
+	
+	Password.propTypes = {
+	    inputValue: _react2.default.PropTypes.string,
+	    handleChange: _react2.default.PropTypes.func.isRequired
+	};
+	
+	exports.default = Password;
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ConfirmPassword = function ConfirmPassword(props) {
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "registerConfirmPassword" },
+	            "Confirm Password ",
+	            _react2.default.createElement(
+	                "span",
+	                { className: "registration-form__asterisk" },
+	                "*"
+	            )
+	        ),
+	        _react2.default.createElement("input", { id: "registerConfirmPassword", className: "registration-form__input", type: "password", value: props.inputValue, onChange: props.handleChange })
+	    );
+	};
+	
+	ConfirmPassword.propTypes = {
+	    inputValue: _react2.default.PropTypes.string,
+	    handleChange: _react2.default.PropTypes.func.isRequired
+	};
+	
+	exports.default = ConfirmPassword;
 
 /***/ }
 /******/ ]);
