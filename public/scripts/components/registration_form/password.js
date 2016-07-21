@@ -1,12 +1,12 @@
 import React from 'react';
 
 const Password = (props) => (
-    <div>
+    <fieldset className="registration-form__input-section">
         <label htmlFor="registerPassword">
             Password <span className="registration-form__asterisk">*</span>
         </label>       
-        <input id="registerPassword" className="registration-form__input" type="password" value={props.inputValue} onChange={props.handleChange} />
-    </div>
+        <input required minLength="6" id="registerPassword" className="registration-form__input" type="password" value={props.inputValue} onChange={props.handleChange} />
+    </fieldset>
 );
 
 Password.propTypes = {

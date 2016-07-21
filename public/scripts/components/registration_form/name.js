@@ -1,12 +1,12 @@
 import React from 'react';
 
 const Name = (props) => (
-    <div>
-        <label htmlFor="registerFullName">
+    <fieldset className="registration-form__input-section">
+       <label htmlFor="registerFullName">
             Name <span className="registration-form__asterisk">*</span>
         </label>
-        <input id="registerFullName" className="registration-form__input" type="text" value={props.inputValue} onChange={props.handleChange} placeholder="Full name" />                   
-    </div>
+        <input required id="registerFullName" className="registration-form__input" type="text" value={props.inputValue} onChange={props.handleChange} placeholder="Full name" />                   
+    </fieldset>
 );
 
 Name.propTypes = {

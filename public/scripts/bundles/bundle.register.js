@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _registrationForm = __webpack_require__(202);
+	var _registrationForm = __webpack_require__(201);
 	
 	var _registrationForm2 = _interopRequireDefault(_registrationForm);
 	
@@ -21124,8 +21124,7 @@
 /* 198 */,
 /* 199 */,
 /* 200 */,
-/* 201 */,
-/* 202 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21140,25 +21139,29 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _slider = __webpack_require__(203);
-	
-	var _slider2 = _interopRequireDefault(_slider);
-	
-	var _name = __webpack_require__(204);
+	var _name = __webpack_require__(203);
 	
 	var _name2 = _interopRequireDefault(_name);
 	
-	var _email = __webpack_require__(205);
+	var _email = __webpack_require__(204);
 	
 	var _email2 = _interopRequireDefault(_email);
 	
-	var _password = __webpack_require__(206);
+	var _password = __webpack_require__(205);
 	
 	var _password2 = _interopRequireDefault(_password);
 	
-	var _confirmPassword = __webpack_require__(207);
+	var _confirmPassword = __webpack_require__(206);
 	
 	var _confirmPassword2 = _interopRequireDefault(_confirmPassword);
+	
+	var _discoverSelect = __webpack_require__(207);
+	
+	var _discoverSelect2 = _interopRequireDefault(_discoverSelect);
+	
+	var _slider = __webpack_require__(202);
+	
+	var _slider2 = _interopRequireDefault(_slider);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21181,13 +21184,15 @@
 	            email: '',
 	            password: '',
 	            confirmPassword: '',
-	            discoverySource: '',
+	            discoverySource: [],
 	            jackedSliderValue: 3
 	        };
 	        _this.handleNameChange = _this.handleNameChange.bind(_this);
 	        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
 	        _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
 	        _this.handleConfirmPasswordChange = _this.handleConfirmPasswordChange.bind(_this);
+	        _this.handleSourceSelectChange = _this.handleSourceSelectChange.bind(_this);
+	        _this.handleJackedSliderChange = _this.handleJackedSliderChange.bind(_this);
 	        _this.handleSubmit = _this.handleSubmit.bind(_this);
 	        return _this;
 	    }
@@ -21213,30 +21218,57 @@
 	            this.setState({ confirmPassword: event.target.value });
 	        }
 	    }, {
+	        key: 'handleSourceSelectChange',
+	        value: function handleSourceSelectChange(event) {
+	            var selectedOptions = [];
+	            for (var i = 0; i < event.target.options.length; i++) {
+	                if (event.target.options[i].selected) {
+	                    selectedOptions.push(event.target.options[i].value);
+	                }
+	            }
+	            this.setState({ discoverySource: selectedOptions });
+	        }
+	    }, {
+	        key: 'handleJackedSliderChange',
+	        value: function handleJackedSliderChange(event) {
+	            this.setState({ jackedSliderValue: parseInt(event.target.value) });
+	        }
+	    }, {
+	        key: 'validateForm',
+	        value: function validateForm() {
+	            var validForm = this.state.password === this.state.confirmPassword ? true : false;
+	            return validForm;
+	        }
+	    }, {
 	        key: 'handleSubmit',
 	        value: function handleSubmit(event) {
 	            var _this2 = this;
 	
 	            event.preventDefault();
 	
-	            fetch('/register', {
-	                method: 'post',
-	                headers: new Headers({
-	                    'Content-Type': 'application/json'
-	                }),
-	                body: JSON.stringify(this.state)
-	            }).then(function (response) {
-	                _this2.setState({
-	                    fullName: '',
-	                    email: '',
-	                    password: '',
-	                    confirmPassword: '',
-	                    discoverySource: '',
-	                    jackedSliderValue: 3
+	            if (this.validateForm()) {
+	                console.log('valid form');
+	                fetch('/register', {
+	                    method: 'post',
+	                    headers: new Headers({
+	                        'Content-Type': 'application/json'
+	                    }),
+	                    body: JSON.stringify(this.state)
+	                }).then(function (response) {
+	                    _this2.setState({
+	                        fullName: '',
+	                        email: '',
+	                        password: '',
+	                        confirmPassword: '',
+	                        discoverySource: '',
+	                        jackedSliderValue: 3
+	                    });
+	                }).catch(function (error) {
+	                    alert('Error during registration.');
 	                });
-	            }).catch(function (error) {
-	                alert('Error during registration.');
-	            });
+	            } else {
+	                alert('Passwords do not match');
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -21252,59 +21284,12 @@
 	                _react2.default.createElement(
 	                    'form',
 	                    { onSubmit: this.handleSubmit, className: 'registration-form' },
-	                    _react2.default.createElement(
-	                        'fieldset',
-	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(_name2.default, { inputValue: this.state.fullName, handleChange: this.handleNameChange })
-	                    ),
-	                    _react2.default.createElement(
-	                        'fieldset',
-	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(_email2.default, { inputValue: this.state.email, handleChange: this.handleEmailChange })
-	                    ),
-	                    _react2.default.createElement(
-	                        'fieldset',
-	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(_password2.default, { inputValue: this.state.password, handleChange: this.handlePasswordChange })
-	                    ),
-	                    _react2.default.createElement(
-	                        'fieldset',
-	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(_confirmPassword2.default, { inputValue: this.state.confirmPassword, handleChange: this.handleConfirmPasswordChange })
-	                    ),
-	                    _react2.default.createElement(
-	                        'fieldset',
-	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: '' },
-	                            'Where did you hear about TUHUR?'
-	                        ),
-	                        _react2.default.createElement(
-	                            'select',
-	                            { multiple: true, id: '' },
-	                            _react2.default.createElement(
-	                                'option',
-	                                null,
-	                                'Word of mouth'
-	                            ),
-	                            _react2.default.createElement(
-	                                'option',
-	                                null,
-	                                'Search'
-	                            ),
-	                            _react2.default.createElement(
-	                                'option',
-	                                null,
-	                                'Social'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'fieldset',
-	                        { className: 'registration-form__input-section' },
-	                        _react2.default.createElement(_slider2.default, null)
-	                    ),
+	                    _react2.default.createElement(_name2.default, { inputValue: this.state.fullName, handleChange: this.handleNameChange }),
+	                    _react2.default.createElement(_email2.default, { inputValue: this.state.email, handleChange: this.handleEmailChange }),
+	                    _react2.default.createElement(_password2.default, { inputValue: this.state.password, handleChange: this.handlePasswordChange }),
+	                    _react2.default.createElement(_confirmPassword2.default, { inputValue: this.state.confirmPassword, handleChange: this.handleConfirmPasswordChange }),
+	                    _react2.default.createElement(_discoverSelect2.default, { inputValue: this.state.discoverySource, handleChange: this.handleSourceSelectChange }),
+	                    _react2.default.createElement(_slider2.default, { inputValue: this.state.jackedSliderValue, handleChange: this.handleJackedSliderChange }),
 	                    _react2.default.createElement(
 	                        'button',
 	                        { className: 'registration-form__submit-button', type: 'submit' },
@@ -21321,6 +21306,59 @@
 	exports.default = RegistrationForm;
 
 /***/ },
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Slider = function Slider(props) {
+	    return _react2.default.createElement(
+	        "fieldset",
+	        { className: "registration-form__input-section" },
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "" },
+	            "How jacked up are you right now?"
+	        ),
+	        _react2.default.createElement(
+	            "div",
+	            { className: "registration-form__slider-container" },
+	            _react2.default.createElement(
+	                "div",
+	                { className: "registration-form__slider-input-container" },
+	                _react2.default.createElement("input", { id: "jackedUpInput", className: "registration-form__slider-input registration-form__input", type: "range", min: "1", max: "5", step: "1", onChange: props.handleChange, value: props.inputValue })
+	            ),
+	            _react2.default.createElement(
+	                "div",
+	                { className: "registration-form__slider-ouput-container" },
+	                _react2.default.createElement(
+	                    "output",
+	                    { htmlFor: "jackedUpInput" },
+	                    props.inputValue
+	                )
+	            )
+	        )
+	    );
+	};
+	
+	Slider.propTypes = {
+	    inputValue: _react2.default.PropTypes.number,
+	    handleChange: _react2.default.PropTypes.func.isRequired
+	};
+	
+	exports.default = Slider;
+
+/***/ },
 /* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -21330,77 +21368,36 @@
 	    value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var Name = function Name(props) {
+	    return _react2.default.createElement(
+	        "fieldset",
+	        { className: "registration-form__input-section" },
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "registerFullName" },
+	            "Name ",
+	            _react2.default.createElement(
+	                "span",
+	                { className: "registration-form__asterisk" },
+	                "*"
+	            )
+	        ),
+	        _react2.default.createElement("input", { required: true, id: "registerFullName", className: "registration-form__input", type: "text", value: props.inputValue, onChange: props.handleChange, placeholder: "Full name" })
+	    );
+	};
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	Name.propTypes = {
+	    inputValue: _react2.default.PropTypes.string,
+	    handleChange: _react2.default.PropTypes.func.isRequired
+	};
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Slider = function (_Component) {
-	    _inherits(Slider, _Component);
-	
-	    function Slider(props) {
-	        _classCallCheck(this, Slider);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Slider).call(this, props));
-	
-	        _this.state = {
-	            value: 3
-	        };
-	        _this.handleChange = _this.handleChange.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(Slider, [{
-	        key: "handleChange",
-	        value: function handleChange(event) {
-	            this.setState({ value: event.target.value });
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            return _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
-	                    "label",
-	                    { htmlFor: "" },
-	                    "How jacked up are you right now?"
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "registration-form__slider-container" },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "registration-form__slider-input-container" },
-	                        _react2.default.createElement("input", { id: "jackedUpInput", className: "registration-form__slider-input registration-form__input", type: "range", min: "1", max: "5", step: "1", onChange: this.handleChange, value: this.state.value })
-	                    ),
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "registration-form__slider-ouput-container" },
-	                        _react2.default.createElement(
-	                            "output",
-	                            { htmlFor: "jackedUpInput" },
-	                            this.state.value
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Slider;
-	}(_react.Component);
-	
-	exports.default = Slider;
+	exports.default = Name;
 
 /***/ },
 /* 204 */
@@ -21418,30 +21415,30 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Name = function Name(props) {
+	var Email = function Email(props) {
 	    return _react2.default.createElement(
-	        "div",
-	        null,
+	        "fieldset",
+	        { className: "registration-form__input-section" },
 	        _react2.default.createElement(
 	            "label",
-	            { htmlFor: "registerFullName" },
-	            "Name ",
+	            { htmlFor: "registerEmail" },
+	            "Email ",
 	            _react2.default.createElement(
 	                "span",
 	                { className: "registration-form__asterisk" },
 	                "*"
 	            )
 	        ),
-	        _react2.default.createElement("input", { id: "registerFullName", className: "registration-form__input", type: "text", value: props.inputValue, onChange: props.handleChange, placeholder: "Full name" })
+	        _react2.default.createElement("input", { required: true, id: "registerEmail", className: "registration-form__input", type: "email", value: props.inputValue, onChange: props.handleChange, placeholder: "example@domain.com" })
 	    );
 	};
 	
-	Name.propTypes = {
+	Email.propTypes = {
 	    inputValue: _react2.default.PropTypes.string,
 	    handleChange: _react2.default.PropTypes.func.isRequired
 	};
 	
-	exports.default = Name;
+	exports.default = Email;
 
 /***/ },
 /* 205 */
@@ -21459,30 +21456,30 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Email = function Email(props) {
+	var Password = function Password(props) {
 	    return _react2.default.createElement(
-	        "div",
-	        null,
+	        "fieldset",
+	        { className: "registration-form__input-section" },
 	        _react2.default.createElement(
 	            "label",
-	            { htmlFor: "registerEmail" },
-	            "Email ",
+	            { htmlFor: "registerPassword" },
+	            "Password ",
 	            _react2.default.createElement(
 	                "span",
 	                { className: "registration-form__asterisk" },
 	                "*"
 	            )
 	        ),
-	        _react2.default.createElement("input", { id: "registerEmail", className: "registration-form__input", type: "email", value: props.inputValue, onChange: props.handleChange, placeholder: "example@domain.com" })
+	        _react2.default.createElement("input", { required: true, minLength: "6", id: "registerPassword", className: "registration-form__input", type: "password", value: props.inputValue, onChange: props.handleChange })
 	    );
 	};
 	
-	Email.propTypes = {
+	Password.propTypes = {
 	    inputValue: _react2.default.PropTypes.string,
 	    handleChange: _react2.default.PropTypes.func.isRequired
 	};
 	
-	exports.default = Email;
+	exports.default = Password;
 
 /***/ },
 /* 206 */
@@ -21500,30 +21497,30 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Password = function Password(props) {
+	var ConfirmPassword = function ConfirmPassword(props) {
 	    return _react2.default.createElement(
-	        "div",
-	        null,
+	        "fieldset",
+	        { className: "registration-form__input-section" },
 	        _react2.default.createElement(
 	            "label",
-	            { htmlFor: "registerPassword" },
-	            "Password ",
+	            { htmlFor: "registerConfirmPassword" },
+	            "Confirm Password ",
 	            _react2.default.createElement(
 	                "span",
 	                { className: "registration-form__asterisk" },
 	                "*"
 	            )
 	        ),
-	        _react2.default.createElement("input", { id: "registerPassword", className: "registration-form__input", type: "password", value: props.inputValue, onChange: props.handleChange })
+	        _react2.default.createElement("input", { required: true, minLength: "6", id: "registerConfirmPassword", className: "registration-form__input", type: "password", value: props.inputValue, onChange: props.handleChange })
 	    );
 	};
 	
-	Password.propTypes = {
+	ConfirmPassword.propTypes = {
 	    inputValue: _react2.default.PropTypes.string,
 	    handleChange: _react2.default.PropTypes.func.isRequired
 	};
 	
-	exports.default = Password;
+	exports.default = ConfirmPassword;
 
 /***/ },
 /* 207 */
@@ -21541,30 +21538,43 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var ConfirmPassword = function ConfirmPassword(props) {
+	var DiscoverSelect = function DiscoverSelect(props) {
 	    return _react2.default.createElement(
-	        "div",
-	        null,
+	        "fieldset",
+	        { className: "registration-form__input-section" },
 	        _react2.default.createElement(
 	            "label",
-	            { htmlFor: "registerConfirmPassword" },
-	            "Confirm Password ",
-	            _react2.default.createElement(
-	                "span",
-	                { className: "registration-form__asterisk" },
-	                "*"
-	            )
+	            { htmlFor: "discoverSelect" },
+	            "Where did you hear about TUHUR?"
 	        ),
-	        _react2.default.createElement("input", { id: "registerConfirmPassword", className: "registration-form__input", type: "password", value: props.inputValue, onChange: props.handleChange })
+	        _react2.default.createElement(
+	            "select",
+	            { multiple: true, id: "discoverSelect", value: props.inputValue, onChange: props.handleChange },
+	            _react2.default.createElement(
+	                "option",
+	                { value: "word of mouth" },
+	                "Word of mouth"
+	            ),
+	            _react2.default.createElement(
+	                "option",
+	                { value: "search" },
+	                "Search"
+	            ),
+	            _react2.default.createElement(
+	                "option",
+	                { value: "social" },
+	                "Social"
+	            )
+	        )
 	    );
 	};
 	
-	ConfirmPassword.propTypes = {
-	    inputValue: _react2.default.PropTypes.string,
+	DiscoverSelect.propTypes = {
+	    inputSelect: _react2.default.PropTypes.array,
 	    handleChange: _react2.default.PropTypes.func.isRequired
 	};
 	
-	exports.default = ConfirmPassword;
+	exports.default = DiscoverSelect;
 
 /***/ }
 /******/ ]);
