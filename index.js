@@ -18,7 +18,7 @@ app.get('/register', function(req, res) {
 app.post('/register', function(req, res) {
     console.log(req.body);
     res.status(200);
-    res.send('received a registration POST request');
+    res.json(req.body);
 });
 
 app.listen(3000, function() {
